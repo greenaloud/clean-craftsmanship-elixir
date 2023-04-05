@@ -47,6 +47,19 @@ defmodule BowlingTest do
     assert(score === 10 + 2 + 2 + 2*18)
   end
 
+  test "strike, spare, strike, spare, spare, 4*10" do
+    score = %Bowling{}
+    |> strike()
+    |> spare()
+    |> strike()
+    |> spare()
+    |> spare()
+    |> Bowling.roll(4, 10)
+    |> Bowling.get_score()
+
+    assert(score === (10 + 5 + 5) + (10 + 10) + (10 + 5 + 5) + (10 + 5) + (10 + 4) + 4*10)
+  end
+
   defp strike(%Bowling{} = bowling), do: Bowling.roll(bowling, 10, 1)
   defp spare(%Bowling{} = bowling), do: Bowling.roll(bowling, 5, 2)
 end

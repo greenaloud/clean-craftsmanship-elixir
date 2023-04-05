@@ -10,7 +10,8 @@ defmodule Bowling do
 
   def get_score(%Bowling{} = bowling), do: calculate_score(bowling.pins)
 
-  defp calculate_score([]), do: 0
+  defp calculate_score([ first, second | [] ]), do: first + second
+  defp calculate_score([ first, second, third | [] ]), do: first + second + third
   defp calculate_score([ first, second, third | tail ]) when first === 10 do
     frame_score = first + second + third
     frame_score + calculate_score([ second, third | tail ])
