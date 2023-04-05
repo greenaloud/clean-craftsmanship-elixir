@@ -60,6 +60,30 @@ defmodule BowlingTest do
     assert(score === (10 + 5 + 5) + (10 + 10) + (10 + 5 + 5) + (10 + 5) + (10 + 4) + 4*10)
   end
 
-  defp strike(%Bowling{} = bowling), do: Bowling.roll(bowling, 10, 1)
+  test "strike all" do
+    score = %Bowling{}
+    |> twelve_times(&BowlingTest.strike/1)
+    |> Bowling.get_score()
+
+    assert(score === 300)
+  end
+
+  test "10 strikes, spare" do
+    score = %Bowling{}
+    |> invoke(&BowlingTest.strike/1, 10)
+    |> spare()
+    |> Bowling.get_score()
+
+    assert(score === 30*8 + (10 + 10 + 5) + (10 + 5 + 5))
+  end
+
+  def strike(%Bowling{} = bowling), do: Bowling.roll(bowling, 10, 1)
   defp spare(%Bowling{} = bowling), do: Bowling.roll(bowling, 5, 2)
+
+  defp twelve_times(param, func), do: invoke(param, func, 12)
+
+  defp invoke(param, func, 0), do: param
+  defp invoke(param, func, remaining_invoke_count) do
+    func.(param) |> invoke(func, remaining_invoke_count - 1)
+  end
 end
