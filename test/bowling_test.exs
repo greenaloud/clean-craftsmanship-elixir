@@ -77,6 +77,24 @@ defmodule BowlingTest do
     assert(score === 30*8 + (10 + 10 + 5) + (10 + 5 + 5))
   end
 
+  test "(3,4), (6,4), (5,4), 0*14" do
+    score = %Bowling{}
+    |> Bowling.roll(3, 1)
+    |> Bowling.roll(4, 1)
+
+    |> Bowling.roll(6, 1)
+    |> Bowling.roll(4, 1)
+
+    |> Bowling.roll(5, 1)
+    |> Bowling.roll(4, 1)
+
+    |> Bowling.roll(0, 14)
+    |> get_score()
+
+    # assert(score === 3 + (4+6+4) + (4+5) + 4)
+    assert(score === (3+4) + (6+4+5) + (5+4))
+  end
+
   def strike(%Bowling{} = bowling), do: Bowling.roll(bowling, 10, 1)
   defp spare(%Bowling{} = bowling), do: Bowling.roll(bowling, 5, 2)
 

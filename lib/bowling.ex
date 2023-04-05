@@ -20,6 +20,6 @@ defmodule Bowling do
     frame_score = first + second + third
     frame_score + calculate_score([ third | tail ])
   end
-  defp calculate_score([ head | tail ]), do: head + calculate_score(tail)
+  defp calculate_score([ first, second | tail ]), do: first + second + calculate_score(tail)
 
 end
