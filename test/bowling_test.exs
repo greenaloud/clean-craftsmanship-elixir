@@ -4,12 +4,17 @@ defmodule BowlingTest do
   import Bowling
 
   test "Roll 0 20 times" do
-    score = Bowling.roll(0, 20)
+    bowling = Bowling.roll(%Bowling{}, 0, 20)
+    score = Bowling.get_score(bowling)
     assert(score === 0)
   end
 
   test "Roll 4 20 times" do
-    score = Bowling.roll(4, 20)
+    bowling = Bowling.roll(%Bowling{}, 4, 20)
+    score = Bowling.get_score(bowling)
     assert(score == 80)
+  end
+
+  test "Roll spare and 4 for 18times" do
   end
 end

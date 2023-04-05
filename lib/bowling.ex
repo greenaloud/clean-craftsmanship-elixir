@@ -1,6 +1,16 @@
 defmodule Bowling do
 
-  def roll(_, 0), do: 0
-  def roll(score, roll_count), do: score + roll(score, roll_count - 1)
+  defstruct pins: []
+
+  def roll(%Bowling{} = bowling, _, 0), do: bowling
+  def roll(%Bowling{} = bowling, score, roll_count) do
+    cur = %Bowling{ pins: bowling.pins ++ [score] }
+    roll(cur, score, roll_count - 1)
+  end
+
+  def get_score(%Bowling{} = bowling), do: calculate_score(bowling.pins)
+
+  defp calculate_score([]), do: 0
+  defp calculate_score([ head | tail ]), do: head + calculate_score(tail)
 
 end
