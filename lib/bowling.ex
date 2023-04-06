@@ -3,12 +3,12 @@ defmodule Bowling do
   defstruct pins: []
 
   def roll(%Bowling{} = bowling, _, 0), do: bowling
-  def roll(%Bowling{} = bowling, score, roll_count) do
-    cur = %Bowling{ pins: bowling.pins ++ [score] }
+  def roll(%Bowling{ pins: pins }, score, roll_count) do
+    cur = %Bowling{ pins: pins ++ [score] }
     roll(cur, score, roll_count - 1)
   end
 
-  def get_score(%Bowling{} = bowling), do: calculate_score(bowling.pins)
+  def get_score(%Bowling{ pins: pins }), do: calculate_score(pins)
 
   defp calculate_score([ first, second | [] ]), do: first + second
   defp calculate_score([ first, second, third | [] ]), do: first + second + third
